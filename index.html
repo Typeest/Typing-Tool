@@ -2,58 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Typeest Pro - Professional Typing Engine</title>
+    <title>Typeest - Master Your Typing Speed</title>
     <style>
-        :root { --bg: #0f172a; --text: #94a3b8; --active: #f8fafc; --correct: #22c55e; --wrong: #ef4444; }
-        body { background: var(--bg); color: var(--text); font-family: 'JetBrains Mono', monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        body { background: #0f172a; color: #94a3b8; font-family: monospace; display: flex; flex-direction: column; align-items: center; padding: 50px; }
         #container { width: 80%; max-width: 800px; }
-        #text-display { font-size: 2rem; line-height: 2.5; letter-spacing: 2px; }
-        .char { transition: 0.1s; }
-        .char.correct { color: var(--correct); }
-        .char.wrong { color: var(--wrong); border-bottom: 2px solid var(--wrong); }
-        .char.active { border-left: 2px solid #38bdf8; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-        #stats { margin-top: 30px; display: flex; gap: 20px; font-size: 1.2rem; color: #38bdf8; }
+        #text-display { font-size: 1.8rem; margin-bottom: 20px; }
+        .info-section { margin-top: 50px; padding: 20px; background: #1e293b; color: #cbd5e1; border-radius: 8px; }
     </style>
 </head>
 <body>
     <div id="container">
-        <div id="text-display"></div>
-        <div id="stats"><span>WPM: 0</span><span>ACC: 100%</span></div>
+        <h1>Typeest Pro</h1>
+        <div id="text-display">The quick brown fox jumps over the lazy dog.</div>
+        
+        <div class="info-section">
+            <h2>Why Fast Typing Matters?</h2>
+            <p>In today's digital world, typing speed is a critical skill for programmers, writers, and students. Improving your WPM (Words Per Minute) not only saves time but also boosts your productivity and focus.</p>
+        </div>
     </div>
-    <input type="text" id="input" style="opacity: 0; position: absolute;">
-
-    <script>
-        const quotes = ["coding is not just about writing syntax it is about solving problems", "a professional developer writes code that others can understand", "keyboard shortcuts can save you hours of work every week"];
-        const text = quotes[Math.floor(Math.random() * quotes.length)];
-        const display = document.getElementById('text-display');
-        const input = document.getElementById('input');
-        const stats = document.getElementById('stats');
-        
-        display.innerHTML = text.split('').map(c => `<span class="char">${c}</span>`).join('');
-        const chars = display.querySelectorAll('.char');
-        
-        let start = null;
-        document.body.addEventListener('click', () => input.focus());
-        input.addEventListener('input', () => {
-            if (!start) start = Date.now();
-            const val = input.value.split('');
-            chars.forEach((c, i) => {
-                c.classList.remove('active', 'correct', 'wrong');
-                if(val[i] == null) { if(i === val.length) c.classList.add('active'); }
-                else if(val[i] === c.innerText) c.classList.add('correct');
-                else c.classList.add('wrong');
-            });
-            const timeInMin = (Date.now() - start) / 60000;
-            const wpm = Math.round((input.value.length / 5) / (timeInMin || 0.1));
-            const errors = document.querySelectorAll('.wrong').length;
-            const acc = Math.round(((input.value.length - errors) / (input.value.length || 1)) * 100);
-            stats.innerHTML = `<span>WPM: ${wpm}</span><span>ACC: ${acc}%</span>`;
-        });
-    </script>
-<section style="margin-top: 50px; padding: 20px; background: #fff; border-radius: 8px;">
-    <h2>Why Fast Typing Matters?</h2>
-    <p>In today's digital world, typing speed is a critical skill for programmers, writers, and students. Improving your WPM (Words Per Minute) not only saves time but also boosts your productivity and focus.</p>
-    <p>Our Typeest Pro tool helps you track your accuracy and speed in real-time, providing a distraction-free environment to practice.</p>
-</section></body>
+</body>
 </html>
