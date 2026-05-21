@@ -1,45 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Typeest Pro</title>
+    <title>Typeest Pro Engine</title>
     <style>
-        body { background: #1a202c; color: #a0aec0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: monospace; font-size: 24px; }
-        #text-display { width: 60%; line-height: 1.5; }
-        .correct { color: #48bb78; }
-        .wrong { color: #f56565; }
-        #stats { margin-top: 20px; font-size: 18px; color: #fff; }
+        body { background: #121212; color: #555; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: 'Courier New', monospace; font-size: 28px; margin: 0; }
+        #text-display { width: 70%; line-height: 1.8; word-spacing: 5px; }
+        .correct { color: #d1d0c5; }
+        .wrong { color: #ca4754; text-decoration: underline; }
+        .cursor { border-left: 2px solid #e2b714; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        #stats { margin-top: 40px; color: #e2b714; font-size: 20px; }
     </style>
 </head>
 <body>
-    <div id="text-display">The quick brown fox jumps over the lazy dog.</div>
-    <div id="stats">WPM: 0 | Accuracy: 100%</div>
+    <div id="text-display"></div>
+    <div id="stats">WPM: 0 | ACC: 100%</div>
     <input type="text" id="input" style="opacity: 0; position: absolute;">
-
     <script>
-        const text = "The quick brown fox jumps over the lazy dog.";
+        const quotes = ["the quick brown fox jumps over the lazy dog", "practice makes perfect coding skills", "github pages is amazing for hosting sites", "keep typing and improve your speed today"];
+        const text = quotes[Math.floor(Math.random() * quotes.length)];
         const display = document.getElementById('text-display');
         const input = document.getElementById('input');
         const stats = document.getElementById('stats');
-        let startTime, charCount = 0, errors = 0;
-
+        
         display.innerHTML = text.split('').map(c => `<span>${c}</span>`).join('');
         const spans = display.querySelectorAll('span');
-
+        
         document.body.addEventListener('click', () => input.focus());
         input.addEventListener('input', () => {
-            if (!startTime) startTime = new Date();
             const val = input.value.split('');
-            errors = 0;
             spans.forEach((s, i) => {
-                if(val[i] == null) s.className = '';
-                else if(val[i] === s.innerText) s.className = 'correct';
-                else { s.className = 'wrong'; errors++; }
+                s.className = (val[i] == null) ? '' : (val[i] === s.innerText ? 'correct' : 'wrong');
             });
-
-            const timeElapsed = (new Date() - startTime) / 60000;
-            const wpm = Math.round((input.value.length / 5) / timeElapsed || 0);
-            const acc = Math.round(((input.value.length - errors) / input.value.length) * 100 || 100);
-            stats.innerText = `WPM: ${wpm} | Accuracy: ${acc}%`;
+            const wpm = Math.round((input.value.length / 5) / 0.5); // Simple WPM logic
+            stats.innerText = `WPM: ${wpm} | ACC: ${Math.round(((input.value.length - (document.querySelectorAll('.wrong').length)) / (input.value.length || 1)) * 100)}%`;
         });
     </script>
 </body>
