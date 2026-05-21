@@ -3,29 +3,43 @@
 <head>
     <title>Typeest Pro</title>
     <style>
-        body { background: #131a28; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        #text { font-size: 32px; letter-spacing: 2px; }
-        .correct { color: #10b981; }
-        .wrong { color: #ef4444; }
+        body { background: #1a202c; color: #a0aec0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: monospace; font-size: 24px; }
+        #text-display { width: 60%; line-height: 1.5; }
+        .correct { color: #48bb78; }
+        .wrong { color: #f56565; }
+        #stats { margin-top: 20px; font-size: 18px; color: #fff; }
     </style>
 </head>
 <body>
-    <div id="text">The quick brown fox jumps over the lazy dog.</div>
-    <input type="text" id="in" style="opacity:0; position:absolute;" autofocus>
+    <div id="text-display">The quick brown fox jumps over the lazy dog.</div>
+    <div id="stats">WPM: 0 | Accuracy: 100%</div>
+    <input type="text" id="input" style="opacity: 0; position: absolute;">
+
     <script>
         const text = "The quick brown fox jumps over the lazy dog.";
-        const display = document.getElementById('text');
-        const input = document.getElementById('in');
+        const display = document.getElementById('text-display');
+        const input = document.getElementById('input');
+        const stats = document.getElementById('stats');
+        let startTime, charCount = 0, errors = 0;
+
         display.innerHTML = text.split('').map(c => `<span>${c}</span>`).join('');
         const spans = display.querySelectorAll('span');
+
         document.body.addEventListener('click', () => input.focus());
         input.addEventListener('input', () => {
+            if (!startTime) startTime = new Date();
             const val = input.value.split('');
+            errors = 0;
             spans.forEach((s, i) => {
                 if(val[i] == null) s.className = '';
                 else if(val[i] === s.innerText) s.className = 'correct';
-                else s.className = 'wrong';
+                else { s.className = 'wrong'; errors++; }
             });
+
+            const timeElapsed = (new Date() - startTime) / 60000;
+            const wpm = Math.round((input.value.length / 5) / timeElapsed || 0);
+            const acc = Math.round(((input.value.length - errors) / input.value.length) * 100 || 100);
+            stats.innerText = `WPM: ${wpm} | Accuracy: ${acc}%`;
         });
     </script>
 </body>
