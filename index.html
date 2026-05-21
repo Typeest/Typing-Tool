@@ -2,32 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Typeest - Master Your Typing Speed</title>
+    <title>Typeest - Practice Typing</title>
     <style>
-        body { background: #0f172a; color: #94a3b8; font-family: monospace; display: flex; flex-direction: column; align-items: center; padding: 50px; margin: 0; }
-        #container { width: 80%; max-width: 800px; }
-        #text-display { font-size: 1.8rem; margin-bottom: 20px; text-align: center; }
-        .info-section { margin-top: 50px; padding: 20px; background: #1e293b; color: #cbd5e1; border-radius: 8px; }
-        .footer-area { margin-top: 40px; padding: 20px; text-align: center; border-top: 1px solid #334155; }
-        .footer-area a { color: #38bdf8; text-decoration: none; margin: 0 10px; font-size: 0.9rem; }
+        body { background: #0f172a; color: #94a3b8; font-family: monospace; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
+        #container { width: 90%; max-width: 700px; text-align: center; }
+        #quote { font-size: 1.5rem; margin: 30px 0; padding: 20px; background: #1e293b; border-radius: 8px; }
+        #input-area { width: 100%; padding: 15px; font-size: 1.2rem; background: #0f172a; color: #fff; border: 2px solid #38bdf8; border-radius: 5px; }
+        .footer-area { margin-top: 40px; padding: 20px; border-top: 1px solid #334155; }
+        .footer-area a { color: #38bdf8; text-decoration: none; margin: 0 10px; }
     </style>
 </head>
 <body>
     <div id="container">
-        <h1 style="text-align: center;">Typeest Pro</h1>
-        <div id="text-display">The quick brown fox jumps over the lazy dog.</div>
+        <h1>Typeest Pro</h1>
+        <div id="quote">The quick brown fox jumps over the lazy dog.</div>
+        <input type="text" id="input-area" placeholder="Start typing here..." autofocus>
         
-        <div class="info-section">
-            <h2>Welcome Students</h2>
-            <p>Master English and Hindi typing for free. Our goal is to help you learn computer skills through interactive lessons.</p>
-        </div>
-
         <div class="footer-area">
             <a href="about.html">About Us</a> | 
             <a href="lessons.html">Lessons</a> | 
-            <a href="privacy.html">Privacy Policy</a> | 
-            <a href="terms.html">Terms & Conditions</a>
+            <a href="privacy.html">Privacy Policy</a>
         </div>
     </div>
+
+    <script>
+        const quote = document.getElementById('quote').innerText;
+        const input = document.getElementById('input-area');
+
+        input.addEventListener('input', () => {
+            if (input.value === quote) {
+                alert("Great job! You typed it correctly.");
+                input.value = '';
+            }
+        });
+    </script>
 </body>
 </html>
