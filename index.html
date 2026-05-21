@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Typeest Pro</title>
+    <style>
+        body { background: #131a28; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        #text { font-size: 32px; letter-spacing: 2px; }
+        .correct { color: #10b981; }
+        .wrong { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div id="text">The quick brown fox jumps over the lazy dog.</div>
+    <input type="text" id="in" style="opacity:0; position:absolute;" autofocus>
+    <script>
+        const text = "The quick brown fox jumps over the lazy dog.";
+        const display = document.getElementById('text');
+        const input = document.getElementById('in');
+        display.innerHTML = text.split('').map(c => `<span>${c}</span>`).join('');
+        const spans = display.querySelectorAll('span');
+        document.body.addEventListener('click', () => input.focus());
+        input.addEventListener('input', () => {
+            const val = input.value.split('');
+            spans.forEach((s, i) => {
+                if(val[i] == null) s.className = '';
+                else if(val[i] === s.innerText) s.className = 'correct';
+                else s.className = 'wrong';
+            });
+        });
+    </script>
+</body>
+</html>
